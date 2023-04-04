@@ -13,10 +13,10 @@ h1 {
 }
 
 .wrapper {
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
-  /* border: 1px solid black; */
+  border: 1px solid black;
   width: 700px;
-  margin-top: 50px;
+  margin-top: 50px; */
 }
 
