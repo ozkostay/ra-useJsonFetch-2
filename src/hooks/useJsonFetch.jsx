@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function useJsonFetch(url, opts) {
-  // console.log('url', url, 'ops', opts);
-  // const [data, setData] = setState({a: '111', b: '222'});
-  const [loading, setLoading] = useState(true);
-  // const [error, setError] = setState(null);
   
-  function fnSet() {
-    // console.log('props', props);
-    setLoading(!loading);
-  }
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  return [loading, fnSet];
+  useEffect(() => {
+    fetch(url)
+    .then((response) => {
+      // console.log(response);
+      if (!response.ok) {
+        setError(`Ошибка ${response.status} ${response.statusText} `);
+      }
+      return response.json()
+    })
+    .then((data) => setData(data))
+    .catch((error) => {
+      console.log('!!!', error);
+      setError(error)
+    })
+    .finally(() => setLoading(false))
+  },[]);
+
+  return [data, loading, error];
 }
